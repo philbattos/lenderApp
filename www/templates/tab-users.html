@@ -1,0 +1,47 @@
+<ion-view view-title="Users">
+  <ion-content class="padding">
+
+    <ul class="list" ng-controller="UsersCtrl">
+      <li class="item" ng-repeat="user in users">
+        <h3>{{user.firstname}} {{user.lastname}}</h3>
+        {{user.email}}
+      </li>
+    </ul>
+
+    <form ng-submit="createUser(user)">
+      <h3 class="text-center">Add User</h3>
+      <label class="item item-input">
+        <input type="text" required name="firstname" placeholder="First Name" ng-model="user.firstname" />
+      </label>
+      <label class="item item-input">
+        <input type="text" required name="lastname" placeholder="Last Name" ng-model="user.lastname" />
+      </label>
+      <label class="item item-input">
+        <input type="text" required name="email" placeholder="Email Address" ng-model="user.email" />
+      </label>
+      <button class="button button-block button-balanced" type="submit">
+        Add User
+      </button>
+    </form>
+
+    <!--
+    <h4 class="text-center">Add New User</h4>
+
+    <div class="list list-inset">
+      <label class="item item-input">
+        <input type="text" placeholder="First Name">
+      </label>
+      <label class="item item-input">
+        <input type="text" placeholder="Last Name">
+      </label>
+      <label class="item item-input">
+        <input type="text" placeholder="Email">
+      </label>
+      <button class="button button-block button-balanced">
+        <strong>Submit</strong>
+      </label>
+    </div>
+    -->
+
+  </ion-content>
+</ion-view>

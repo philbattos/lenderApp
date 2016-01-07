@@ -1,0 +1,42 @@
+<ion-view view-title="Transactions">
+  <ion-content class="padding">
+
+    <ul class="list" ng-controller="TransactionsCtrl">
+      <li class="item" ng-repeat="trans in transactions">
+        Sender: {{trans.user}}
+        <br />
+        Sent to: {{trans.peer}}
+        <br />
+        <strong>Amount: {{trans.amount}}</strong>
+        <br />
+        Terms: {{trans.terms}}
+      </li>
+    </ul>
+
+    <form ng-submit="createTransaction(transaction)">
+      <h3 class="text-center">Lend Money</h3>
+      <label class="item item-input">
+        <input type="text" required name="firstname" placeholder="First Name" ng-model="transaction.firstname" />
+      </label>
+      <label class="item item-input">
+        <input type="text" required name="lastname" placeholder="Last Name" ng-model="transaction.lastname" />
+      </label>
+      <label class="item item-input">
+        <input type="text" required name="email" placeholder="Email Address" ng-model="transaction.email" />
+      </label>
+      <label class="item item-input">
+        <input type="text" required name="phone" placeholder="Phone Number" ng-model="transaction.phone" />
+      </label>
+      <label class="item item-input">
+        <input type="text" required name="amount" placeholder="Amount to Lend" ng-model="transaction.amount" />
+      </label>
+      <label class="item item-input">
+        <input type="text" required name="terms" placeholder="Lending Terms" ng-model="transaction.terms" />
+      </label>
+      <button class="button button-block button-balanced" type="submit">
+        Send Lending Request
+      </button>
+    </form>
+
+  </ion-content>
+</ion-view>
