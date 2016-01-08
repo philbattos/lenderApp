@@ -33,7 +33,7 @@ angular.module('starter.controllers', [])
 
   $http.get(stagingUrl)
     .success(function(data) {
-      $scope.users = data.users.slice(0,3);
+      $scope.users = data.users;
     })
     .error(function(data) {
       console.log('server side error occurred');
@@ -80,7 +80,7 @@ angular.module('starter.controllers', [])
 
   $http.get(stagingUrl)
     .success(function(data) {
-      $scope.transactions = data.transactions.slice(0,3);
+      $scope.openTransactions = data.open_transactions;
     })
     .error(function(data) {
       console.log('server side error occurred');
@@ -104,15 +104,22 @@ angular.module('starter.controllers', [])
     $http(request)
       .success(function(transaction) {
         console.log(transaction);
+        // window.location.reload(true);
         var alertPopup = $ionicPopup.alert({
           title: 'Success',
           template: `A text has been sent to ${transaction.firstname}'s phone to confirm the transaction.`
+        })
+        alertPopup.then(function(res) {
+          window.location.reload(true);
         })
       })
       .error(function(transaction) {
         var alertPopup = $ionicPopup.alert({
           title: 'Error',
           template: `A new transaction could not be created for ${transaction.email}. Please try again.`
+        })
+        alertPopup.then(function(res) {
+          window.location.reload(true);
         })
       })
 
