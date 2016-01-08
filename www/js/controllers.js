@@ -1,4 +1,4 @@
-angular.module('starter.controllers', [])
+angular.module('debenture.controllers', [])
 
 .controller('DashCtrl', function($scope) {})
 
@@ -20,6 +20,10 @@ angular.module('starter.controllers', [])
 .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
   $scope.chat = Chats.get($stateParams.chatId);
 })
+
+// .controller('MenuCtrl', function($scope) {
+//   // $scope.lendings = Chats.get($stateParams.chatId);
+// })
 
 .controller('AccountCtrl', function($scope) {
   $scope.settings = {
