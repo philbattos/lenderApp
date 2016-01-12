@@ -13,8 +13,11 @@
     </header>
     <ion-content class="has-header">
       <ion-list ng-controller="TransactionsCtrl">
-        <ion-item menu-close ng-repeat="trans in openTransactions" href="#/lend/{{trans.id}}">
+        <ion-item nav-clear menu-close ng-repeat="trans in openTransactions" href="#/lend/{{trans.id}}">
           {{trans.amount}} to {{trans.peer_firstname}}
+          <div class="item-icon-right">
+            <i class="icon ion-ios-arrow-right"></i>
+          </div>
         </ion-item>
       </ion-list>
     </ion-content>

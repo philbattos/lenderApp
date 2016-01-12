@@ -79,7 +79,8 @@ angular.module('debenture.controllers', [])
 })
 
 .controller('TransactionCtrl', function($scope, $http, $ionicPopup, TransactionFactory, $stateParams) {
-  TransactionFactory.getTransaction($stateParams.transactionId)
+  var id = $stateParams.transactionId
+  TransactionFactory.getTransaction(id)
     .success(function (data) {
       $scope.transaction = data.transaction
     })

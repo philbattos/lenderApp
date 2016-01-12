@@ -7,33 +7,64 @@
 
     <div class="list card" ng-controller="TransactionCtrl">
       <div class="item item-divider">
-        Transaction {{transaction.id}}
-      </div>
-      <div class="item item-divider">
-        I'm a Header in a Card!
+        Lent {{transaction.amount}} to [Phil]
+        <span class="pull-right">
+          Status: {{transaction.aasm_state}}
+        </span>
       </div>
 
-      <div class="item item-avatar">
-        <img src="">
+      <div class="item">
+        <h2>Lent {{transaction.amount}} to [Phil]</h2>
+        <p>November 1, 2015</p>
+      </div>
+      <div class="item">
         <h2>Lent to {{transaction.peer}}</h2>
         <p>November 05, 1955</p>
       </div>
 
+      <div class="item">
+        <h2>Phil repaid $20</h2>
+        <p>November 20, 2015</p>
+      </div>
+<!--
       <div class="item item-body">
-        <img class="full-image" src="">
+        <p>November 23, 2015</p>
+        <h2>Phil repaid $50</h2>
+      </div>
+ -->
+      <div class="item item-divider">
+        Accrued Interest ({{transaction.terms}}): $5.13
+      </div>
+      <div class="item item-divider">
+        Remaining Balance: $75.00
+      </div>
+
+      <div class="item item-body">
+        Interest & Terms
         <p>
           This is a "Facebook" styled Card. The header is created from a Thumbnail List item,
           the content is from a card-body consisting of an image and paragraph text. The footer
           consists of tabs, icons aligned left, within the card-footer.
         </p>
+<!--
         <p>
           <a href="#" class="subdued">1 Like</a>
           <a href="#" class="subdued">5 Comments</a>
         </p>
+-->
+      </div>
+
+      <div class="item item-body">
+        Notes
+      </div>
+
+      <div class="item item-text-wrap">
+        <h2>Notes</h2>
       </div>
 
       <div class="item item-text-wrap">
         This is a basic Card with some text.
+        <br />
         <br />- transaction type (lending, borrowing)
         <br />- transaction date
         <br />- amount
@@ -43,8 +74,14 @@
         <br />- status
         <br />- form to update transaction (update amount, notes, etc.)
       </div>
+
       <div class="item item-divider">
-        (footer) Due Date: 12/11/2020
+        Due Date: 12/11/2020
+      </div>
+      <div class="item item-divider">
+        <div class="pull-right text-muted">
+          <p>Ref #{{transaction.id}}</p>
+        </div>
       </div>
     </div>
 
