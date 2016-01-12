@@ -39,20 +39,38 @@ angular.module('debenture', ['ionic', 'debenture.controllers', 'debenture.servic
     // })
 
     // setup an abstract state for the tabs directive
-    .state('tab', {
-      url: '/tab',
+    // .state('tab', {
+    //   url: '/tab',
+    //   abstract: true,
+    //   templateUrl: 'templates/tabs.html'
+    // })
+
+    .state('lend', {
+      url: '/lend',
       abstract: true,
-      templateUrl: 'templates/tabs.html'
+      // templateUrl: 'templates/tabs.html'
+      templateUrl: 'templates/lendings/side-menu.html',
+      controller: 'MenuCtrl' // change name of MenuCtrl ?
     })
 
     // Each tab has its own nav history stack:
 
-    .state('tab.lend', {
-      url: '/lend',
+    .state('lend.new', {
+      url: '/new',
       views: {
-        'tab-lend': {
-          templateUrl: 'templates/tab-lend.html',
+        'menuContent': {
+          templateUrl: 'templates/lendings/new.html',
           controller: 'TransactionsCtrl'
+        }
+      }
+    })
+
+    .state('lend.history', {
+      url: '/:transactionId',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/transaction.html',
+          controller: 'TransactionCtrl'
         }
       }
     })
@@ -66,47 +84,47 @@ angular.module('debenture', ['ionic', 'debenture.controllers', 'debenture.servic
     //   }
     // })
 
-    .state('tab.borrow', {
-      url: '/borrow',
-      views: {
-        'tab-borrow': {
-          templateUrl: 'templates/tab-borrow.html',
-          controller: 'ChatsCtrl'
-        }
-      }
-    })
+    // .state('tab.borrow', {
+    //   url: '/borrow',
+    //   views: {
+    //     'tab-borrow': {
+    //       templateUrl: 'templates/tab-borrow.html',
+    //       controller: 'ChatsCtrl'
+    //     }
+    //   }
+    // })
 
-    .state('tab.chat-detail', {
-      url: '/chats/:chatId',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/chat-detail.html',
-          controller: 'ChatDetailCtrl'
-        }
-      }
-    })
+    // .state('tab.chat-detail', {
+    //   url: '/chats/:chatId',
+    //   views: {
+    //     'tab-chats': {
+    //       templateUrl: 'templates/chat-detail.html',
+    //       controller: 'ChatDetailCtrl'
+    //     }
+    //   }
+    // })
 
-    .state('tab.account', {
-      url: '/account',
-      views: {
-        'tab-account': {
-          templateUrl: 'templates/tab-account.html',
-          controller: 'AccountCtrl'
-        }
-      }
-    })
+    // .state('tab.account', {
+    //   url: '/account',
+    //   views: {
+    //     'tab-account': {
+    //       templateUrl: 'templates/tab-account.html',
+    //       controller: 'AccountCtrl'
+    //     }
+    //   }
+    // })
 
-    .state('tab.users', {
-      url: '/users',
-      views: {
-        'tab-users': {
-          templateUrl: 'templates/tab-users.html',
-          controller: 'UsersCtrl'
-        }
-      }
-    });
+    // .state('tab.users', {
+    //   url: '/users',
+    //   views: {
+    //     'tab-users': {
+    //       templateUrl: 'templates/tab-users.html',
+    //       controller: 'UsersCtrl'
+    //     }
+    //   }
+    // });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/lend');
+  $urlRouterProvider.otherwise('/lend/new');
 
 });

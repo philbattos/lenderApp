@@ -21,9 +21,9 @@ angular.module('debenture.controllers', [])
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
-// .controller('MenuCtrl', function($scope) {
-//   // $scope.lendings = Chats.get($stateParams.chatId);
-// })
+.controller('MenuCtrl', function($scope) {
+  // $scope.lendings = Chats.get($stateParams.chatId);
+})
 
 .controller('AccountCtrl', function($scope) {
   $scope.settings = {
@@ -78,18 +78,27 @@ angular.module('debenture.controllers', [])
   };
 })
 
-.controller('TransactionsCtrl', function($scope, $http, $ionicPopup) {
-  var stagingUrl  = 'https://serene-ravine-6822.herokuapp.com/api/transactions'
-  var devUrl      = 'http://localhost:3000/api/transactions'
+.controller('TransactionCtrl', function($scope, $http, $ionicPopup, TransactionFactory, $stateParams) {
+  TransactionFactory.getTransaction($stateParams.transactionId)
+    .success(function (data) {
+      $scope.transaction = data.transaction
+    })
+    .error(function (error) {
+      console.log('server side error occurred');
+    });
+})
 
-  $http.get(stagingUrl)
-    .success(function(data) {
-      $scope.openTransactions = data.open_transactions;
+.controller('TransactionsCtrl', function($scope, $http, $ionicPopup, TransactionFactory) {
+  // http://weblogs.asp.net/dwahlin/using-an-angularjs-factory-to-interact-with-a-restful-service
+  TransactionFactory.getOpenTransactions()
+    .success(function (data) {
+      $scope.openTransactions = data.open_transactions
     })
     .error(function(data) {
       console.log('server side error occurred');
-    })
+    });
 
+  // TO DO: move POST request into TransactionFactory
   $scope.createTransaction = function(transaction) {
 
     var request = {
