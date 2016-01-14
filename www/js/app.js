@@ -50,7 +50,7 @@ angular.module('debenture', ['ionic', 'debenture.controllers', 'debenture.servic
       abstract: true,
       // templateUrl: 'templates/tabs.html'
       templateUrl: 'templates/lendings/side-menu.html',
-      controller: 'MenuCtrl' // change name of MenuCtrl ?
+      controller: 'TransactionsCtrl' // change name of MenuCtrl ?
     })
 
     // Each tab has its own nav history stack:

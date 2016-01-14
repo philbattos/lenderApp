@@ -17,9 +17,9 @@ angular.module('debenture.controllers', [])
   };
 })
 
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
-})
+// .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
+//   $scope.chat = Chats.get($stateParams.chatId);
+// })
 
 .controller('MenuCtrl', function($scope) {
   // $scope.lendings = Chats.get($stateParams.chatId);
@@ -31,6 +31,10 @@ angular.module('debenture.controllers', [])
   };
 })
 
+//-------------------------------------------------
+//    USER collections & creation (:index, :create)
+//-------------------------------------------------
+// TO DO: Move to User Factory
 .controller('UsersCtrl', function($scope, $http, $ionicPopup) {
   var stagingUrl  = 'https://serene-ravine-6822.herokuapp.com/api/users'
   var devUrl      = 'http://localhost:3000/api/users'
@@ -78,50 +82,45 @@ angular.module('debenture.controllers', [])
   };
 })
 
-.controller('TransactionCtrl', function($scope, $http, $ionicPopup, TransactionFactory, $stateParams) {
+//-------------------------------------------------
+//    single TRANSACTION (:show)
+//-------------------------------------------------
+.controller('TransactionCtrl', function($scope, TransactionFactory, $stateParams) {
   var id = $stateParams.transactionId
   TransactionFactory.getTransaction(id)
     .success(function (data) {
       $scope.transaction = data.transaction
     })
     .error(function (error) {
-      console.log('server side error occurred');
+      console.log('There was an error in the TransactionCtrl');
     });
 })
 
-.controller('TransactionsCtrl', function($scope, $http, $ionicPopup, TransactionFactory) {
-  // http://weblogs.asp.net/dwahlin/using-an-angularjs-factory-to-interact-with-a-restful-service
-  TransactionFactory.getOpenTransactions()
-    .success(function (data) {
-      $scope.openTransactions = data.open_transactions
-    })
-    .error(function(data) {
-      console.log('server side error occurred');
-    });
+//-------------------------------------------------
+//    TRANSACTION collections & creation (:index, :create)
+//-------------------------------------------------
+.controller('TransactionsCtrl', function($scope, TransactionFactory, $ionicPopup) {
 
-  // TO DO: move POST request into TransactionFactory
+  openTransactions();
+
+  function openTransactions() {
+    TransactionFactory.getOpenTransactions()
+      .success(function (data) {
+        $scope.openTransactions = data.open_transactions;
+      })
+      .error(function(data) {
+        console.log('There was an error in the TransactionsCtrl');
+      });
+  }
+
   $scope.createTransaction = function(transaction) {
-
-    var request = {
-      method: 'POST',
-      url: stagingUrl,
-      data: {
-        firstname: transaction.firstname,
-        lastname: transaction.lastname,
-        email: transaction.email,
-        phone: transaction.phone,
-        amount: transaction.amount,
-        terms: transaction.terms
-      }
-    }
-
-    $http(request)
-      .success(function(transaction) {
+    TransactionFactory.createTransaction(transaction)
+      .success(function () {
         console.log(transaction);
         // window.location.reload(true);
         var alertPopup = $ionicPopup.alert({
           title: 'Success',
-          template: `A text has been sent to ${transaction.firstname}'s phone to confirm the transaction.`
+          template: `A text has been sent to ${transaction.firstname} to confirm the transaction.`
         })
         alertPopup.then(function(res) {
           window.location.reload(true);
@@ -136,6 +135,6 @@ angular.module('debenture.controllers', [])
           window.location.reload(true);
         })
       })
+  }
 
-  };
 });
