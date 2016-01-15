@@ -7,7 +7,7 @@
     <form ng-submit="createTransaction(transaction)">
       <div class="text-center">
         <h3>Lend Money</h3>
-        <h5>enter recipient's info</h5>
+        <div class='text-muted'>enter recipient's info</div>
       </div>
       <div class="row">
         <div class="col">
@@ -15,6 +15,8 @@
             <input type="text" required name="firstname" placeholder="First Name" ng-model="transaction.firstname" />
           </label>
         </div>
+      </div>
+      <div class="row">
         <div class="col">
           <label class="item item-input">
             <input type="text" required name="lastname" placeholder="Last Name" ng-model="transaction.lastname" />
@@ -24,30 +26,45 @@
       <div class="row">
         <div class="col">
           <label class="item item-input">
+            <div style="margin-right: 5px;">
+              +1
+            </div>
             <input type="text" required name="phone" placeholder="Phone Number" ng-model="transaction.phone" />
           </label>
         </div>
+      </div>
+      <!--
+      <div class="row">
         <div class="col">
           <label class="item item-input">
             <input type="text" required name="email" placeholder="Email Address" ng-model="transaction.email" />
           </label>
         </div>
       </div>
+      -->
       <div class="row">
         <div class="col">
           <label class="item item-input">
-            <input type="text" required name="amount" placeholder="Amount to Lend" ng-model="transaction.amount" />
+            <i class="icon ion-social-usd" style="margin-right: 5px;"></i>
+            <input type="text" required name="amount" placeholder="Amount" ng-model="transaction.amount" />
           </label>
         </div>
         <div class="col">
           <label class="item item-input">
-            <input type="text" required name="terms" placeholder="Lending Terms" ng-model="transaction.terms" />
+            <input type="text" required name="terms" placeholder="Interest" ng-model="transaction.terms" />
+            <div style="padding-right: 10px;">
+              <strong>%</strong>
+            </div>
           </label>
         </div>
       </div>
-      <button class="button button-block button-balanced" type="submit">
-        Send Lending Request
-      </button>
+      <div class="row">
+        <div class="col">
+          <button class="button button-block button-balanced" type="submit">
+            Send Lending Request
+          </button>
+        </div>
+      </div>
     </form>
 
   </ion-content>

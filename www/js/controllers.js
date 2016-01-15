@@ -69,13 +69,13 @@ angular.module('debenture.controllers', [])
         // user.email = ""
         var alertPopup = $ionicPopup.alert({
           title: 'Success',
-          template: `A new user has been created for ${user.email}!`
+          template: 'A new user has been created for ' + user.email
         })
       })
       .error(function(user) {
         var alertPopup = $ionicPopup.alert({
           title: 'Error',
-          template: `A new user could not be created for #{user.email}. Please try again.`
+          template: 'A new user could not be created for ' + user.email + '. Please try again.'
         })
       })
 
@@ -120,7 +120,7 @@ angular.module('debenture.controllers', [])
         // window.location.reload(true);
         var alertPopup = $ionicPopup.alert({
           title: 'Success',
-          template: `A text has been sent to ${transaction.firstname} to confirm the transaction.`
+          template: 'A text has been sent to ' + transaction.firstname + ' to confirm the transaction.',
         })
         alertPopup.then(function(res) {
           window.location.reload(true);
@@ -129,7 +129,7 @@ angular.module('debenture.controllers', [])
       .error(function(transaction) {
         var alertPopup = $ionicPopup.alert({
           title: 'Error',
-          template: `A new transaction could not be created for ${transaction.email}. Please try again.`
+          template: 'A new transaction could not be created for ' + transaction.email + '. Please try again.'
         })
         alertPopup.then(function(res) {
           window.location.reload(true);
