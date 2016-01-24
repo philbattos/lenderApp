@@ -1,5 +1,8 @@
 angular.module('debenture.controllers', [])
 
+//-------------------------------------------------
+//    example controllers
+//-------------------------------------------------
 .controller('DashCtrl', function($scope) {})
 
 .controller('ChatsCtrl', function($scope, Chats) {
@@ -17,10 +20,6 @@ angular.module('debenture.controllers', [])
   };
 })
 
-// .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-//   $scope.chat = Chats.get($stateParams.chatId);
-// })
-
 .controller('MenuCtrl', function($scope) {
   // $scope.lendings = Chats.get($stateParams.chatId);
 })
@@ -29,6 +28,88 @@ angular.module('debenture.controllers', [])
   $scope.settings = {
     enableFriends: true
   };
+})
+
+//-------------------------------------------------
+//    single TRANSACTION (:show)
+//-------------------------------------------------
+.controller('TransactionCtrl', function($scope, TransactionFactory, $stateParams) {
+  var id = $stateParams.transactionId
+  TransactionFactory.getTransaction(id)
+    .success(function (data) {
+      console.log(data)
+      $scope.transaction = data.transaction
+    })
+    .error(function (error) {
+      console.log('There was an error in the TransactionCtrl');
+    });
+})
+
+//-------------------------------------------------
+//    TRANSACTION collections & creation (:index, :create)
+//-------------------------------------------------
+.controller('TransactionsCtrl', function($scope, TransactionFactory, $cordovaContacts, $ionicPopup) {
+
+  $scope.getContactList = function() {
+    var options = {
+      filter:         '',
+      multiple:       true,
+      hasPhoneNumber: true, // Android only
+      // desiredFields:  [name, phoneNumbers]
+    };
+    $cordovaContacts.find(options).then(function(result) {
+      $scope.contacts = result;
+      console.log($scope.contacts.length)
+    }, function(error) {
+      console.log("ERROR: " + error);
+    });
+  };
+
+  // $scope.selectContact = function(contact) {
+  //   console.log('selected contact!')
+  //   console.log(contact.name.formatted)
+  //   $scope.populateContact = contact.name.formatted;
+  //   window.location.reload(true);
+  // }
+
+  openTransactions();
+
+  function openTransactions() {
+    TransactionFactory.getOpenTransactions()
+      .success(function (data) {
+        $scope.openTransactions = data.open_transactions;
+      })
+      .error(function(data) {
+        console.log('There was an error in the TransactionsCtrl');
+      });
+  }
+
+  $scope.testTrans = "testing..."
+  // $scope.populateContact = 'John Doe'
+
+  $scope.createTransaction = function(transaction) {
+    TransactionFactory.createTransaction(transaction)
+      .success(function () {
+        console.log(transaction);
+        // window.location.reload(true);
+        var alertPopup = $ionicPopup.alert({
+          title: 'Success',
+          template: 'A text has been sent to ' + transaction.firstname + ' to confirm the transaction.',
+        })
+        alertPopup.then(function(res) {
+          window.location.reload(true);
+        })
+      })
+      .error(function(transaction) {
+        var alertPopup = $ionicPopup.alert({
+          title: 'Error',
+          template: 'A new transaction could not be created for ' + transaction.email + '. Please try again.'
+        })
+        alertPopup.then(function(res) {
+          window.location.reload(true);
+        })
+      })
+  }
 })
 
 //-------------------------------------------------
@@ -79,62 +160,5 @@ angular.module('debenture.controllers', [])
         })
       })
 
-  };
-})
-
-//-------------------------------------------------
-//    single TRANSACTION (:show)
-//-------------------------------------------------
-.controller('TransactionCtrl', function($scope, TransactionFactory, $stateParams) {
-  var id = $stateParams.transactionId
-  TransactionFactory.getTransaction(id)
-    .success(function (data) {
-      $scope.transaction = data.transaction
-    })
-    .error(function (error) {
-      console.log('There was an error in the TransactionCtrl');
-    });
-})
-
-//-------------------------------------------------
-//    TRANSACTION collections & creation (:index, :create)
-//-------------------------------------------------
-.controller('TransactionsCtrl', function($scope, TransactionFactory, $ionicPopup) {
-
-  openTransactions();
-
-  function openTransactions() {
-    TransactionFactory.getOpenTransactions()
-      .success(function (data) {
-        $scope.openTransactions = data.open_transactions;
-      })
-      .error(function(data) {
-        console.log('There was an error in the TransactionsCtrl');
-      });
   }
-
-  $scope.createTransaction = function(transaction) {
-    TransactionFactory.createTransaction(transaction)
-      .success(function () {
-        console.log(transaction);
-        // window.location.reload(true);
-        var alertPopup = $ionicPopup.alert({
-          title: 'Success',
-          template: 'A text has been sent to ' + transaction.firstname + ' to confirm the transaction.',
-        })
-        alertPopup.then(function(res) {
-          window.location.reload(true);
-        })
-      })
-      .error(function(transaction) {
-        var alertPopup = $ionicPopup.alert({
-          title: 'Error',
-          template: 'A new transaction could not be created for ' + transaction.email + '. Please try again.'
-        })
-        alertPopup.then(function(res) {
-          window.location.reload(true);
-        })
-      })
-  }
-
 });

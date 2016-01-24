@@ -1,4 +1,5 @@
 // capture errors (white screen)
+// TO DO: remove for production
 window.onerror = function (errorMsg, url, lineNumber) {
   alert('Error: ' + errorMsg + ' Script: ' + url + ' Line: ' + lineNumber);
 }
@@ -10,7 +11,7 @@ window.onerror = function (errorMsg, url, lineNumber) {
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('debenture', ['ionic', 'debenture.controllers', 'debenture.services'])
+angular.module('debenture', ['ionic', 'ngCordova', 'debenture.controllers', 'debenture.services'])
 // angular.module('app', ['ngCordova', 'LocalStorageModule']) // added with tutorial
 
 .run(function($ionicPlatform) {

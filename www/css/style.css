@@ -5,3 +5,7 @@
 .text-muted {
   color: #777;
 }
+
+.text-danger {
+  color: red;
+}
