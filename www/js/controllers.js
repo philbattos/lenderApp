@@ -48,30 +48,8 @@ angular.module('debenture.controllers', [])
 //-------------------------------------------------
 //    TRANSACTION collections & creation (:index, :create)
 //-------------------------------------------------
-.controller('TransactionsCtrl', function($scope, TransactionFactory, $cordovaContacts, $ionicPopup) {
-
-  $scope.getContactList = function() {
-    var options = {
-      filter:         '',
-      multiple:       true,
-      hasPhoneNumber: true, // Android only
-      // desiredFields:  [name, phoneNumbers]
-    };
-    $cordovaContacts.find(options).then(function(result) {
-      $scope.contacts = result;
-      console.log($scope.contacts.length)
-    }, function(error) {
-      console.log("ERROR: " + error);
-    });
-  };
-
-  // $scope.selectContact = function(contact) {
-  //   console.log('selected contact!')
-  //   console.log(contact.name.formatted)
-  //   $scope.populateContact = contact.name.formatted;
-  //   window.location.reload(true);
-  // }
-
+.controller('TransactionsCtrl', function($scope, TransactionFactory, $ionicModal, $cordovaContacts, $ionicPopup, $ionicLoading) {
+  $scope.transaction = {firstname: '', lastname: '', phone: ''}
   openTransactions();
 
   function openTransactions() {
@@ -83,9 +61,6 @@ angular.module('debenture.controllers', [])
         console.log('There was an error in the TransactionsCtrl');
       });
   }
-
-  $scope.testTrans = "testing..."
-  // $scope.populateContact = 'John Doe'
 
   $scope.createTransaction = function(transaction) {
     TransactionFactory.createTransaction(transaction)
@@ -110,6 +85,46 @@ angular.module('debenture.controllers', [])
         })
       })
   }
+
+  // move CONTACTS functions to a controller or service?
+  $scope.getContactList = function() {
+    var options = {
+      filter:         '',
+      multiple:       true,
+      hasPhoneNumber: true, // Android only
+      // desiredFields:  [name, phoneNumbers]
+    };
+
+    $cordovaContacts.find(options).then(function(result) {
+      result = result.filter(function(contact) {
+        return contact.phoneNumbers
+      });
+      $scope.contacts = result.sort(function(a, b) {
+        var aName = a.name.formatted || 'zzz'
+        var bName = b.name.formatted || 'zzz'
+        return aName.localeCompare(bName);
+      });
+      console.log($scope.contacts.length)
+    }, function(error) {
+      console.log("ERROR: " + error);
+    });
+  };
+
+  $scope.selectContact = function(contact) {
+    console.log(contact.name.formatted)
+    $scope.transaction.firstname = contact.name.givenName;
+    $scope.transaction.lastname = contact.name.familyName;
+    $scope.transaction.phone = contact.phoneNumbers[0].value;
+    $scope.modal.hide();
+  };
+
+  $ionicModal.fromTemplateUrl('templates/contacts_modal.html', {
+      scope: $scope,
+      animation: 'slide-in-right'
+    }).then(function(modal) {
+      $scope.modal = modal;
+    });
+
 })
 
 //-------------------------------------------------

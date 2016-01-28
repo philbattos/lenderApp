@@ -1,0 +1,19 @@
+<ion-modal-view>
+  <ion-header-bar>
+    <h1 class="title">Contacts</h1>
+    <button class="button button-clear button-primary" ng-click="modal.hide()">Cancel</button>
+  </ion-header-bar>
+  <ion-content>
+    <ion-list>
+      <ion-item collection-repeat="contact in contacts" ng-click="selectContact(contact)">
+        {{contact.name.formatted}}
+        <span class="item-note">
+          {{contact.phoneNumbers[0].value}}
+        </span>
+      </ion-item>
+    </ion-list>
+
+    <ion-infinite-scroll /> <!-- provides spinner until contacts load -->
+
+  </ion-content>
+</ion-modal-view>

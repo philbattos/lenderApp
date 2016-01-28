@@ -2,18 +2,26 @@
   <ion-nav-buttons side="left">
     <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
   </ion-nav-buttons>
-  <ion-content class="padding">
+  <ion-content class="padding" ng-controller="TransactionsCtrl">
+
+    <div class="text-center">
+      <h3>Lend Money</h3>
+      <div class='text-muted'>enter recipient's info</div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div class="text-center">
+          <button class="button button-block button-outline button-positive" ng-click="modal.show();getContactList()">Browse Contacts</button>
+        </div>
+      </div>
+    </div>
 
     <form name="myForm" ng-submit="createTransaction(transaction)" novalidate>
-      <div class="text-center">
-        <h3>Lend Money</h3>
-        <div class='text-muted'>enter recipient's info</div>
-      </div>
       <div class="row">
         <div class="col">
           <label class="item item-input">
-            {{populateContact}}
-            <input type="text" name="firstname" placeholder="First Name" ng-model="transaction.firstname" ng-init="transaction.firstname={{populateContact}}" required />
+            <input type="text" name="firstname" placeholder="First Name" ng-model="transaction.firstname" required />
           </label>
         </div>
       </div>
@@ -30,7 +38,7 @@
             <div style="margin-right: 5px;">
               +1
             </div>
-            <input type="text" name="phone" placeholder="Phone Number" ng-model="transaction.phone" ng-minlength="10" ng-maxlength="10" required />
+            <input type="text" name="phone" placeholder="Phone Number" ng-model="transaction.phone" ng-minlength="10" ng-maxlength="10" pattern="[0-9]*" required />
           </label>
         </div>
       </div>
@@ -52,7 +60,7 @@
         </div>
         <div class="col">
           <label class="item item-input">
-            <input type="number" name="terms" placeholder="Interest" ng-model="transaction.terms" pattern="^[0-9][0-9]?$|^100$" inputmode="numeric">
+            <input type="tel" name="terms" placeholder="Interest" ng-model="transaction.terms" pattern="100|[1-9][0-9]?" inputmode="numeric">
             <div style="margin-right: 10px;">
               <strong>%</strong>
             </div>
@@ -74,24 +82,11 @@
           </button>
         </div>
       </div>
-
-      <hr />
-
-<!--
-      <div class="padding">
-        <ion-list>
-          <button class="button button-block button-royal" ng-click="getContactList()">Load Contacts</button>
-          <ion-item ng-repeat="contact in contacts" ng-if="contact.phoneNumbers" ng-click="selectContact(contact)">
-            {{contact.name.formatted}}
-            <span class="item-note">
-              {{contact.phoneNumbers[0].value}}
-            </span>
-          </ion-item>
-        </ion-list>
-      </div>
--->
     </form>
-
   </ion-content>
+
+  <hr />
+
+  <!-- <div ng-include src="templates/contacts_modal.html" type="text/ng-template"></div> -->
 
 </ion-view>
