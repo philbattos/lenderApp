@@ -11,7 +11,7 @@ window.onerror = function (errorMsg, url, lineNumber) {
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('debenture', ['ionic', 'ngCordova', 'debenture.controllers', 'debenture.services'])
+angular.module('debenture', ['ionic', 'ngCordova', 'debenture.controllers', 'debenture.services', 'ngResource'])
 // angular.module('app', ['ngCordova', 'LocalStorageModule']) // added with tutorial
 
 .run(function($ionicPlatform) {
@@ -29,6 +29,13 @@ angular.module('debenture', ['ionic', 'ngCordova', 'debenture.controllers', 'deb
   });
 })
 
+.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
+  $httpProvider.defaults.withCredentials = true;
+
+  // ... routes etc below
+
+})
+
 .config(function($stateProvider, $urlRouterProvider) {
 
   // Ionic uses AngularUI Router which uses the concept of states
@@ -37,12 +44,11 @@ angular.module('debenture', ['ionic', 'ngCordova', 'debenture.controllers', 'deb
   // Each state's controller can be found in controllers.js
   $stateProvider
 
-    // login state added with tutorial
-    // .state('login', {
-    //   url: '/login',
-    //   templateUrl: 'templates/login.html',
-    //   controller: 'LoginCtrl'
-    // })
+    .state('login', {
+      url: '/login',
+      templateUrl: 'templates/login.html',
+      controller: 'LoginCtrl'
+    })
 
     // setup an abstract state for the tabs directive
     // .state('tab', {
@@ -131,6 +137,6 @@ angular.module('debenture', ['ionic', 'ngCordova', 'debenture.controllers', 'deb
     // });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/lend/new');
+  $urlRouterProvider.otherwise('/login');
 
 });

@@ -21,6 +21,11 @@ angular.module('debenture.services', [])
   return transFactory;
 })
 
+.factory('UserSession', function($resource) {
+  var stagingUrl = 'https://serene-ravine-6822.herokuapp.com/users/sign_in.json'
+  return $resource(stagingUrl);
+})
+
 //-------------------------------------------------
 //    Example Factory
 //-------------------------------------------------

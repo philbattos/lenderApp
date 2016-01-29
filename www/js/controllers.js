@@ -30,6 +30,30 @@ angular.module('debenture.controllers', [])
   };
 })
 
+.controller('LoginCtrl', function($scope, $location, UserSession, $ionicPopup, $rootScope) {
+  // source: http://www.dovetaildigital.io/blog/2015/8/26/rails-and-ionic-make-love-part-two
+  $scope.data = {};
+
+  $scope.login = function() {
+    var user_session = new UserSession({ user: $scope.data });
+    user_session.$save(
+      function(data){
+        console.log(data.user)
+        window.localStorage['userId'] = data.user.id;
+        window.localStorage['userName'] = data.user.email;
+        $location.path('/lend/new');
+      },
+      function(err){
+        var error = err["data"]["error"] || err.data.join('. ')
+        var confirmPopup = $ionicPopup.alert({
+          title: 'An error occured',
+          template: error
+        });
+      }
+    );
+  };
+})
+
 //-------------------------------------------------
 //    single TRANSACTION (:show)
 //-------------------------------------------------
