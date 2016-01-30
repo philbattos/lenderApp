@@ -30,13 +30,14 @@ angular.module('debenture.controllers', [])
   };
 })
 
-.controller('LoginCtrl', function($scope, $location, UserSession, $ionicPopup, $rootScope) {
+.controller('LoginCtrl', function($scope, $location, UserLogin, $ionicPopup, $rootScope) {
   // source: http://www.dovetaildigital.io/blog/2015/8/26/rails-and-ionic-make-love-part-two
   $scope.data = {};
+  $scope.user = window.localStorage['userName']
 
   $scope.login = function() {
-    var user_session = new UserSession({ user: $scope.data });
-    user_session.$save(
+    var userSession = new UserLogin({ user: $scope.data });
+    userSession.$save(
       function(data){
         console.log(data.user)
         window.localStorage['userId'] = data.user.id;
@@ -44,11 +45,41 @@ angular.module('debenture.controllers', [])
         $location.path('/lend/new');
       },
       function(err){
-        var error = err["data"]["error"] || err.data.join('. ')
+        // alert(err);
+        console.log(err)
+        // var error = err["data"]["error"] || err.data.join('. ')
         var confirmPopup = $ionicPopup.alert({
-          title: 'An error occured',
-          template: error
+          title: 'There was a problem signing in. Please try again or contact our support team.',
+          // template: error
         });
+      }
+    );
+  };
+})
+
+.controller('LogoutCtrl', function($scope, $location, UserLogout, $ionicPopup, $rootScope, $ionicHistory, $timeout) {
+  $scope.logout = function() {
+    var userId = window.localStorage['userId']
+    var userSession = new UserLogout({ user: userId });
+    userSession.$delete(
+      function(data) {
+        console.log(data)
+        window.localStorage.clear();
+        // $ionicHistory.clearCache().then(function() {
+        //   $ionicHistory.clearHistory();
+        // });
+        $timeout(function() {
+          $ionicHistory.clearCache();
+          $ionicHistory.clearHistory();
+        }, 100);
+        $location.path('/login')
+      },
+      function(error) {
+        console.log(error)
+        var confirmPopup = $ionicPopup.alert({
+          title: 'There was a problem signing out. Please try again or contact our support team.',
+          // template: error
+        })
       }
     );
   };
@@ -74,6 +105,7 @@ angular.module('debenture.controllers', [])
 //-------------------------------------------------
 .controller('TransactionsCtrl', function($scope, TransactionFactory, $ionicModal, $cordovaContacts, $ionicPopup, $ionicLoading) {
   $scope.transaction = {firstname: '', lastname: '', phone: ''}
+  $scope.user = window.localStorage['userName']
   openTransactions();
 
   function openTransactions() {

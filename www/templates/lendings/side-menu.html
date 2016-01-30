@@ -19,6 +19,11 @@
             <i class="icon ion-ios-arrow-right"></i>
           </div>
         </ion-item>
+        <ion-item nav-clear menu-close ng-show="!openTransactions.length">
+          <div class="text-center">
+            No active transactions
+          </div>
+        </ion-item>
       </ion-list>
     </ion-content>
   </ion-side-menu>

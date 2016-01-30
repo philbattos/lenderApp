@@ -1,9 +1,12 @@
-<ion-view view-title="">
+<ion-view view-title="{{user}}">
   <ion-nav-buttons side="left">
     <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
   </ion-nav-buttons>
-  <ion-content class="padding" ng-controller="TransactionsCtrl">
+  <ion-nav-buttons side="right">
+    <button class="button button-icon icon ion-log-out" ng-controller="LogoutCtrl" ng-click="logout()"></button>
+  </ion-nav-buttons>
 
+  <ion-content class="padding" ng-controller="TransactionsCtrl">
     <div class="text-center">
       <h3>Lend Money</h3>
       <div class='text-muted'>enter recipient's info</div>
@@ -42,7 +45,7 @@
           </label>
         </div>
       </div>
-      <!--
+
       <div class="row">
         <div class="col">
           <label class="item item-input">
@@ -50,7 +53,7 @@
           </label>
         </div>
       </div>
-      -->
+
       <div class="row">
         <div class="col">
           <label class="item item-input">

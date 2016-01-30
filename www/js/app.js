@@ -29,14 +29,11 @@ angular.module('debenture', ['ionic', 'ngCordova', 'debenture.controllers', 'deb
   });
 })
 
+// send session cookie with each request
 .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
   $httpProvider.defaults.withCredentials = true;
 
-  // ... routes etc below
-
-})
-
-.config(function($stateProvider, $urlRouterProvider) {
+// .config(function($stateProvider, $urlRouterProvider) {
 
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
@@ -48,6 +45,12 @@ angular.module('debenture', ['ionic', 'ngCordova', 'debenture.controllers', 'deb
       url: '/login',
       templateUrl: 'templates/login.html',
       controller: 'LoginCtrl'
+    })
+
+    .state('logout', {
+      url: '/logout',
+      templateUrl: 'templates/logout.html',
+      controller: 'LogoutCtrl'
     })
 
     // setup an abstract state for the tabs directive
