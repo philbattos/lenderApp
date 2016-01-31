@@ -65,7 +65,12 @@ angular.module('debenture', ['ionic', 'ngCordova', 'debenture.controllers', 'deb
       abstract: true,
       // templateUrl: 'templates/tabs.html'
       templateUrl: 'templates/lendings/side-menu.html',
-      controller: 'TransactionsCtrl' // change name of MenuCtrl ?
+      controller: 'TransactionsCtrl', // change name of MenuCtrl ?
+      onEnter: function($state) {
+        if (!window.localStorage['userName']) {
+          $state.go('login');
+        }
+      }
     })
 
     // Each tab has its own nav history stack:
@@ -140,6 +145,6 @@ angular.module('debenture', ['ionic', 'ngCordova', 'debenture.controllers', 'deb
     // });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/login');
+  $urlRouterProvider.otherwise('/lend/new');
 
 });

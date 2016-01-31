@@ -39,7 +39,7 @@ angular.module('debenture.controllers', [])
     var userSession = new UserLogin({ user: $scope.data });
     userSession.$save(
       function(data){
-        console.log(data.user)
+        console.log("logging in " + data.user.email)
         window.localStorage['userId'] = data.user.id;
         window.localStorage['userName'] = data.user.email;
         $location.path('/lend/new');
