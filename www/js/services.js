@@ -3,19 +3,23 @@ angular.module('debenture.services', [])
 // http://weblogs.asp.net/dwahlin/using-an-angularjs-factory-to-interact-with-a-restful-service
 .factory('TransactionFactory', function($http) {
   var transFactory  = {};
-  var stagingUrl    = 'https://serene-ravine-6822.herokuapp.com/api/transactions';
+  var stagingUrl    = 'https://serene-ravine-6822.herokuapp.com/api/';
   // var devUrl        = 'http://localhost:3000/api/transactions';
 
   transFactory.getOpenTransactions = function() {
-    return $http.get(stagingUrl)
+    return $http.get(stagingUrl + 'transactions')
+  }
+
+  transFactory.getOldTransactions = function() {
+    return $http.get(stagingUrl + 'old_transactions')
   }
 
   transFactory.getTransaction = function(id) {
-    return $http.get(stagingUrl + '/' + id)
+    return $http.get(stagingUrl + 'transactions/' + id)
   }
 
   transFactory.createTransaction = function(transaction) {
-    return $http.post(stagingUrl, transaction)
+    return $http.post(stagingUrl + 'transactions', transaction)
   }
 
   return transFactory;

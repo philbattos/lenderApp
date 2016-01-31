@@ -10,6 +10,10 @@
   color: red;
 }
 
+.button.ion-log-out {
+  color: #aaa;
+}
+
 /* modal animation */
 .slide-in-right {
   -webkit-transform: translateX(100%);

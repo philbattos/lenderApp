@@ -107,13 +107,24 @@ angular.module('debenture.controllers', [])
   $scope.transaction = {firstname: '', lastname: '', phone: ''}
   $scope.user = window.localStorage['userName']
   openTransactions();
+  completedTransactions();
 
   function openTransactions() {
     TransactionFactory.getOpenTransactions()
       .success(function (data) {
         $scope.openTransactions = data.open_transactions;
       })
-      .error(function(data) {
+      .error(function (data) {
+        console.log('There was an error in the TransactionsCtrl');
+      });
+  }
+
+  function completedTransactions() {
+    TransactionFactory.getOldTransactions()
+      .success(function (data) {
+        $scope.completedTransactions = data.old_transactions;
+      })
+      .error(function (data) {
         console.log('There was an error in the TransactionsCtrl');
       });
   }

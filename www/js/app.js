@@ -66,14 +66,14 @@ angular.module('debenture', ['ionic', 'ngCordova', 'debenture.controllers', 'deb
       // templateUrl: 'templates/tabs.html'
       templateUrl: 'templates/lendings/side-menu.html',
       controller: 'TransactionsCtrl', // change name of MenuCtrl ?
+
+      // TO DO: build more robust authentication-checking (and redirect) service
       onEnter: function($state) {
         if (!window.localStorage['userName']) {
           $state.go('login');
         }
       }
     })
-
-    // Each tab has its own nav history stack:
 
     .state('lend.new', {
       url: '/new',
@@ -94,55 +94,6 @@ angular.module('debenture', ['ionic', 'ngCordova', 'debenture.controllers', 'deb
         }
       }
     })
-
-    // .state('tab.lendings', {
-    //   views: {
-    //     'lendings-menu': {
-    //       templateUrl: 'templates/side-menu.html',
-    //       controller: 'MenuCtrl'
-    //     }
-    //   }
-    // })
-
-    // .state('tab.borrow', {
-    //   url: '/borrow',
-    //   views: {
-    //     'tab-borrow': {
-    //       templateUrl: 'templates/tab-borrow.html',
-    //       controller: 'ChatsCtrl'
-    //     }
-    //   }
-    // })
-
-    // .state('tab.chat-detail', {
-    //   url: '/chats/:chatId',
-    //   views: {
-    //     'tab-chats': {
-    //       templateUrl: 'templates/chat-detail.html',
-    //       controller: 'ChatDetailCtrl'
-    //     }
-    //   }
-    // })
-
-    // .state('tab.account', {
-    //   url: '/account',
-    //   views: {
-    //     'tab-account': {
-    //       templateUrl: 'templates/tab-account.html',
-    //       controller: 'AccountCtrl'
-    //     }
-    //   }
-    // })
-
-    // .state('tab.users', {
-    //   url: '/users',
-    //   views: {
-    //     'tab-users': {
-    //       templateUrl: 'templates/tab-users.html',
-    //       controller: 'UsersCtrl'
-    //     }
-    //   }
-    // });
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/lend/new');

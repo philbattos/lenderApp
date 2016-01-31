@@ -12,6 +12,9 @@
       <h1 class="title">HISTORY</h1>
     </header>
     <ion-content class="has-header">
+      <div class="item item-divider">
+        Active Lendings
+      </div>
       <ion-list ng-controller="TransactionsCtrl">
         <ion-item nav-clear menu-close ng-repeat="trans in openTransactions" href="#/lend/{{trans.id}}">
           {{trans.amount}} to {{trans.peer_firstname}}
@@ -20,8 +23,22 @@
           </div>
         </ion-item>
         <ion-item nav-clear menu-close ng-show="!openTransactions.length">
-          <div class="text-center">
-            No active transactions
+          <div class="text-center text-muted">
+            No active lendings
+          </div>
+        </ion-item>
+        <div class="item item-divider">
+          Completed Lendings
+        </div>
+        <ion-item nav-clear menu-close ng-repeat="trans in completedTransactions" href="#/lend/{{trans.id}}">
+          {{trans.amount}} to {{trans.peer_firstname}}
+          <div class="item-icon-right">
+            <i class="icon ion-ios-arrow-right"></i>
+          </div>
+        </ion-item>
+        <ion-item nav-clear menu-close ng-show="!completedTransactions.length">
+          <div class="text-center text-muted">
+            No completed lendings
           </div>
         </ion-item>
       </ion-list>
